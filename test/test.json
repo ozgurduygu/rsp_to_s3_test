@@ -1,3 +1,4 @@
 {
-    "dirName": "test"
+    "dirName": "test",
+    "message": "this should pop up in the bucket"
 }
