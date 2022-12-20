@@ -1,5 +1,8 @@
 name: Sync to S3
-on: [pull_request]
+on: 
+  pull_request:
+    branches:
+      - deployment-win
 
 jobs:
   deploy:
