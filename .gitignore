@@ -73,3 +73,6 @@ PATCHWorkspace
 
 # Secrets
 *.secrets
+
+# CI/CD Remnants
+/artifacts

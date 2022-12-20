@@ -14,7 +14,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 0
           lfs: true
       # - uses: actions/cache@v2
       #   with:
