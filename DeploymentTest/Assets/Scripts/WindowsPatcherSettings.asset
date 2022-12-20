@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c42dd832ba964af3bba9343d27a564c4, type: 3}
   m_Name: WindowsPatcherSettings
   m_EditorClassIdentifier: 
-  RemoteUrl: https://raw.githubusercontent.com/RightSoft/RightPropertyDeployment/main/
-  LauncherExecutableName: Launcher.exe
-  GameExecutableName: RightProperty.exe
+  RemoteUrl: http://localhost:8080/Build/Win
+  LauncherExecutableName: TestLauncher.exe
+  GameExecutableName: Test.exe

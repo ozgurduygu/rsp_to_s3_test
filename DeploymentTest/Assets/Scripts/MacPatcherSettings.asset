@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c42dd832ba964af3bba9343d27a564c4, type: 3}
   m_Name: MacPatcherSettings
   m_EditorClassIdentifier: 
-  RemoteUrl: https://raw.githubusercontent.com/RightSoft/RightPropertyDeployment/mac/
-  LauncherExecutableName: Launcher.app
-  GameExecutableName: RightProperty.app
+  RemoteUrl: http://localhost:8080/Build/Mac
+  LauncherExecutableName: TestLauncher.app
+  GameExecutableName: Test.app

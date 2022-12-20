@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -135,19 +135,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41e0c81bd484498eaa6f04bb77af227d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RemoteUrl: https://raw.githubusercontent.com/RightSoft/RightPropertyDeployment/main/
-  LauncherExecutableName: Launcher.exe
-  GameExecutableName: RightProperty.exe
+  WindowsSettings: {fileID: 11400000, guid: f32ddfa6a2f63814a925d578758a3eab, type: 2}
+  MacSettings: {fileID: 11400000, guid: f947015842635b744862b505fe65fbb7, type: 2}
   LaunchAnywayOnError: 0
   DebugMode: 1
   Dispatcher: {fileID: 1744635116}
   ProgressBar: {fileID: 2071246689}
   DownloadSpeed: {fileID: 2071246688}
   ProgressPercentage: {fileID: 2071246687}
-  Logs: {fileID: 2071246686}
+  Logs: {fileID: 0}
   ElapsedTime: {fileID: 2071246685}
   Dialog: {fileID: 1020542263}
-  SizeProgress: {fileID: 2071246690}
+  SizeProgress: {fileID: 0}
   SoftwareVersion: {fileID: 260726939}
   ResumeButton: {fileID: 1049876693}
   PauseButton: {fileID: 790293249}
@@ -1696,17 +1695,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2071246686 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7733160073940175140, guid: d3bc67d7be55e3641ab9d760158dbaa1, type: 3}
-  m_PrefabInstance: {fileID: 2071246683}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2071246687 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7733160073940175138, guid: d3bc67d7be55e3641ab9d760158dbaa1, type: 3}
@@ -1738,16 +1726,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5eb1a4d80b297d9409285b5bb649ae7b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2071246690 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6647468504519189179, guid: d3bc67d7be55e3641ab9d760158dbaa1, type: 3}
-  m_PrefabInstance: {fileID: 2071246683}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

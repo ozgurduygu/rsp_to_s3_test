@@ -1,8 +1,6 @@
 name: Sync to S3
 on: 
-  pull_request:
-    branches:
-      - deployment-win
+  push
 
 jobs:
   deploy:
