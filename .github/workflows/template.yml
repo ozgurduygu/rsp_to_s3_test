@@ -38,7 +38,7 @@ jobs:
         with:
           lfs: true
       - name: Run build command.
-        working-directory: DeploymentTest_Build
+        working-directory: ./DeploymentTest_Build
         run: MHLab.Patch.Admin.exe build
         
       
