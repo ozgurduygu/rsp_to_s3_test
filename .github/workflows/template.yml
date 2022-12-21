@@ -27,16 +27,12 @@ jobs:
           targetPlatform: ${{ matrix.targetPlatform }}
           projectPath: DeploymentTest
           buildsPath: ./DeploymentTest_Build_Ubuntu/App
-      - uses: actions/upload-artifact@v2
-        with:
-          name: Build-${{ matrix.targetPlatform }}
-          path: build/${{ matrix.targetPlatform }}
-      - name: Give permissions.
+      - name: Grant patcher permissions.
         working-directory: DeploymentTest_Build_Ubuntu
         run: sudo chmod 777 ./MHLab.Patch.Admin
-      - name: Run build command.
+      - name: Run patcher build command.
         working-directory: DeploymentTest_Build_Ubuntu
-        run: ./MHLab.Patch.Admin build
+        run: ./MHLab.Patch.Admin build patch
         
       
 
