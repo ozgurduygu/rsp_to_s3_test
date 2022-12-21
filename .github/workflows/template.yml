@@ -41,6 +41,7 @@ jobs:
         working-directory: DeploymentTest_Build_Ubuntu
         run: ./MHLab.Patch.Admin patch
       - uses: actions/cache/save@v3
+        if: always()
         with:
           path: DeploymentTest_Build_Ubuntu/Builds
           key: DeploymentTest_Build_Ubuntu/Builds-${{ matrix.targetPlatform }}
