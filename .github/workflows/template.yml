@@ -3,7 +3,7 @@ name: Build project
 on: workflow_dispatch
 
 jobs:
-  buildGame:
+  unityBuild:
     name: Build for ${{ matrix.targetPlatform }}
     runs-on: ubuntu-latest
     strategy:
@@ -30,4 +30,11 @@ jobs:
         with:
           name: Build-${{ matrix.targetPlatform }}
           path: build/${{ matrix.targetPlatform }}
+  patcherBuild:
+    name: Build patch.
+    runs-on: windows-latest
+    steps:
+      - run: MHLab.Patch.Admin.exe build
+        working-directory: ./DeploymentTest_Build
+      
 
