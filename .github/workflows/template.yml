@@ -12,10 +12,10 @@ jobs:
         targetPlatform:
           - StandaloneWindows64 # Build a Windows 64-bit standalone.
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           lfs: true
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
           path: DeploymentTest/Library
           key: DeploymentTest/Library-${{ matrix.targetPlatform }}
@@ -27,7 +27,7 @@ jobs:
           targetPlatform: ${{ matrix.targetPlatform }}
           projectPath: DeploymentTest
           buildsPath: ./DeploymentTest_Build_Ubuntu/App
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
           path: DeploymentTest_Build_Ubuntu/Builds
           key: DeploymentTest_Build_Ubuntu/Builds
