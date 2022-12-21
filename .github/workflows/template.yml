@@ -39,7 +39,7 @@ jobs:
           lfs: true
       - name: Run build command.
         working-directory: DeploymentTest_Build_Ubuntu
-        run: ./MHLab.Patch.Admin build
+        run: sudo ./MHLab.Patch.Admin build
         
       
 
