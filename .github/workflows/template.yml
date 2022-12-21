@@ -10,7 +10,8 @@ jobs:
       fail-fast: false
       matrix:
         targetPlatform:
-          - StandaloneWindows64 # Build a Windows 64-bit standalone.
+          - StandaloneWindows64
+          - StandaloneOSX
     steps:
       - uses: actions/checkout@v3
         with:
@@ -27,10 +28,10 @@ jobs:
           targetPlatform: ${{ matrix.targetPlatform }}
           projectPath: DeploymentTest
           buildsPath: ./DeploymentTest_Build_Ubuntu/App
-      - uses: actions/cache/restore@v3
+      - uses: actions/download-artifact@v3
         with:
+          name: builds-${{ matrix.targetPlatform }}
           path: DeploymentTest_Build_Ubuntu/Builds
-          key: DeploymentTest_Build_Ubuntu/Builds-${{ matrix.targetPlatform }}
       - name: Grant patcher permissions.
         working-directory: DeploymentTest_Build_Ubuntu
         run: sudo chmod 777 ./MHLab.Patch.Admin
@@ -40,11 +41,10 @@ jobs:
       - name: Run patcher patch command.
         working-directory: DeploymentTest_Build_Ubuntu
         run: ./MHLab.Patch.Admin patch
-      - uses: actions/cache/save@v3
-        if: always()
+      - uses: actions/upload-artifact@v3
         with:
+          name: builds-${{ matrix.targetPlatform }}
           path: DeploymentTest_Build_Ubuntu/Builds
-          key: DeploymentTest_Build_Ubuntu/Builds-${{ matrix.targetPlatform }}
         
       
 
