@@ -35,6 +35,6 @@ jobs:
     runs-on: windows-latest
     steps:
       - run: MHLab.Patch.Admin.exe build
-        working-directory: ./DeploymentTest_Build
+        working-directory: DeploymentTest_Build
       
 
