@@ -32,7 +32,10 @@ jobs:
         run: sudo chmod 777 ./MHLab.Patch.Admin
       - name: Run patcher build command.
         working-directory: DeploymentTest_Build_Ubuntu
-        run: ./MHLab.Patch.Admin build patch
+        run: ./MHLab.Patch.Admin build
+      - name: Run patcher patch command.
+        working-directory: DeploymentTest_Build_Ubuntu
+        run: ./MHLab.Patch.Admin patch
         
       
 
