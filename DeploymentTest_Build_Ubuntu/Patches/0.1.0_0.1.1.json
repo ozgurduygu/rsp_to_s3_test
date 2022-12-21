@@ -1,0 +1,29 @@
+{
+    "From" : "0.1.0",
+    "To" : "0.1.1",
+    "Hash" : "DCOhNQg8gU5nrhIsncX7+z0/l0U",
+    "TotalSize" : 1795,
+    "Entries" : [
+      {
+        "Operation" : 2,
+        "RelativePath" : "DeploymentTest_Data/globalgamemanagers",
+        "Attributes" : 32,
+        "LastWriting" : "2022-12-21 09:38:34Z",
+        "Size" : 0
+      },
+      {
+        "Operation" : 2,
+        "RelativePath" : "DeploymentTest_Data/level1",
+        "Attributes" : 32,
+        "LastWriting" : "2022-12-21 09:38:34Z",
+        "Size" : 0
+      },
+      {
+        "Operation" : 2,
+        "RelativePath" : "version.data",
+        "Attributes" : 32,
+        "LastWriting" : "2022-12-21 09:38:40Z",
+        "Size" : 0
+      }
+    ]
+  }
