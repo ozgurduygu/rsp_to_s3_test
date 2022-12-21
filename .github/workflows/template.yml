@@ -3,33 +3,33 @@ name: Build project
 on: workflow_dispatch
 
 jobs:
-#   unityBuild:
-#     name: Build for ${{ matrix.targetPlatform }}
-#     runs-on: ubuntu-latest
-#     strategy:
-#       fail-fast: false
-#       matrix:
-#         targetPlatform:
-#           - StandaloneWindows64 # Build a Windows 64-bit standalone.
-#     steps:
-#       - uses: actions/checkout@v2
-#         with:
-#           lfs: true
-#       - uses: actions/cache@v2
-#         with:
-#           path: DeploymentTest/Library
-#           key: DeploymentTest/Library-${{ matrix.targetPlatform }}
-#           restore-keys: DeploymentTest/Library-
-#       - uses: game-ci/unity-builder@v2
-#         env:
-#           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-#         with:
-#           targetPlatform: ${{ matrix.targetPlatform }}
-#           projectPath: DeploymentTest
-#       - uses: actions/upload-artifact@v2
-#         with:
-#           name: Build-${{ matrix.targetPlatform }}
-#           path: build/${{ matrix.targetPlatform }}
+  unityBuild:
+    name: Build for ${{ matrix.targetPlatform }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        targetPlatform:
+          - StandaloneWindows64 # Build a Windows 64-bit standalone.
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          lfs: true
+      - uses: actions/cache@v2
+        with:
+          path: DeploymentTest/Library
+          key: DeploymentTest/Library-${{ matrix.targetPlatform }}
+          restore-keys: DeploymentTest/Library-
+      - uses: game-ci/unity-builder@v2
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          targetPlatform: ${{ matrix.targetPlatform }}
+          projectPath: DeploymentTest
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Build-${{ matrix.targetPlatform }}
+          path: build/${{ matrix.targetPlatform }}
   patcherBuild:
     name: Build patch.
     runs-on: ubuntu-latest
@@ -39,7 +39,7 @@ jobs:
           lfs: true
       - name: Run build command.
         working-directory: DeploymentTest_Build
-        run: .\MHLab.Patch.Admin.exe build
+        run: MHLab.Patch.Admin.exe build
         
       
 
