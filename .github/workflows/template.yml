@@ -27,10 +27,10 @@ jobs:
           targetPlatform: ${{ matrix.targetPlatform }}
           projectPath: DeploymentTest
           buildsPath: ./DeploymentTest_Build_Ubuntu/App
-      - uses: actions/cache@v3
+      - uses: actions/cache/restore@v3
         with:
           path: DeploymentTest_Build_Ubuntu/Builds
-          key: DeploymentTest_Build_Ubuntu/Builds
+          key: DeploymentTest_Build_Ubuntu/Builds-${{ matrix.targetPlatform }}
           restore-keys: DeploymentTest_Build_Ubuntu/Builds
       - name: Grant patcher permissions.
         working-directory: DeploymentTest_Build_Ubuntu
@@ -41,6 +41,10 @@ jobs:
       - name: Run patcher patch command.
         working-directory: DeploymentTest_Build_Ubuntu
         run: ./MHLab.Patch.Admin patch
+      - uses: actions/cache/save@v3
+        with:
+          path: DeploymentTest_Build_Ubuntu/Builds
+          key: DeploymentTest_Build_Ubuntu/Builds-${{ matrix.targetPlatform }}
         
       
 
