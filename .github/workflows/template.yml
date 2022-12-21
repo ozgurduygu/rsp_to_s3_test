@@ -27,6 +27,11 @@ jobs:
           targetPlatform: ${{ matrix.targetPlatform }}
           projectPath: DeploymentTest
           buildsPath: ./DeploymentTest_Build_Ubuntu/App
+      - uses: actions/cache@v2
+        with:
+          path: DeploymentTest_Build_Ubuntu/Builds
+          key: DeploymentTest_Build_Ubuntu/Builds
+          restore-keys: DeploymentTest_Build_Ubuntu/Builds
       - name: Grant patcher permissions.
         working-directory: DeploymentTest_Build_Ubuntu
         run: sudo chmod 777 ./MHLab.Patch.Admin
