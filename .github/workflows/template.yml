@@ -38,6 +38,7 @@ jobs:
         with:
           lfs: true
       - name: Give permissions.
+        working-directory: DeploymentTest_Build_Ubuntu
         run: sudo chmod 777 ./MHLab.Patch.Admin
       - name: Run build command.
         working-directory: DeploymentTest_Build_Ubuntu
