@@ -32,7 +32,7 @@ jobs:
 #           path: build/${{ matrix.targetPlatform }}
   patcherBuild:
     name: Build patch.
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Run build command.
         working-directory: ./DeploymentTest_Build
