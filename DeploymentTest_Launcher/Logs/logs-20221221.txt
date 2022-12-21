@@ -1,0 +1,91 @@
+===> [Game updating] process STARTED! <===
+[Game updating] process FAILED! Our servers are not responding... Wait some minutes and retry!
+One or more errors occurred. (An error occurred while sending the request)
+  at System.Threading.Tasks.Task.ThrowIfExceptional (System.Boolean includeTaskCanceledExceptions) [0x00011] in <d6232873609549b8a045fa15811a5bd3>:0 
+  at System.Threading.Tasks.Task`1[TResult].GetResultCore (System.Boolean waitCompletionNotification) [0x0002b] in <d6232873609549b8a045fa15811a5bd3>:0 
+  at System.Threading.Tasks.Task`1[TResult].get_Result () [0x0000f] in <d6232873609549b8a045fa15811a5bd3>:0 
+  at MHLab.Patch.Core.Client.IO.NetworkChecker.IsRemoteServiceAvailable (System.String url, System.Exception& exception) [0x0002c] in <3acd931ddd554fa2a5ac573bdffb7002>:0 
+===> [Game updating] process STARTED! <===
+Update context initializing...
+Software version: 2.6.3
+Software tier: basic
+Update context points to [REDACTED]
+Downloader in use: [MHLab.Patch.Core.Client.IO.FileDownloader]
+No current version found. A full repair may be required.
+Workspace cleaned. Removed 0 files
+No updater definition found on remote server. The Launcher update will be skipped. Problem reference: The URL http://localhost:8080/Build/Win/Updater/updater_index.json generated an exception.
+Retrieved definition for 0.1.0
+Collected information on 153 local files.
+Found 0 applicable updates.
+Update context completed initialization.
+Repairing process started.
+Repairing process completed. Checked 156 files, repaired 156 files, skipped 0 files.
+Update process started.
+Update process completed. Applied 0 patches with 0 operations.
+===> [Game updating] process COMPLETED! <===
+===> [Launcher updating] process STARTED! <===
+Update context initializing...
+Software version: 2.6.3
+Software tier: basic
+Update context points to [REDACTED]
+Downloader in use: [MHLab.Patch.Core.Client.IO.FileDownloader]
+Retrieved current version: 0.1.0
+Workspace cleaned. Removed 0 files
+No updater definition found on remote server. The Launcher update will be skipped. Problem reference: The URL http://localhost:8080/Build/Win/Updater/updater_index.json generated an exception.
+Retrieved definition for 0.1.0
+Collected information on 309 local files.
+Found 0 applicable updates.
+Update context completed initialization.
+No updater definition found. The Launcher cannot be validated or updated.
+===> [Launcher updating] process COMPLETED! <===
+===> [Game updating] process STARTED! <===
+Update context initializing...
+Software version: 2.6.3
+Software tier: basic
+Update context points to [REDACTED]
+Downloader in use: [MHLab.Patch.Core.Client.IO.FileDownloader]
+Retrieved current version: 0.1.0
+Workspace cleaned. Removed 0 files
+No updater definition found on remote server. The Launcher update will be skipped. Problem reference: The URL http://localhost:8080/Build/Win/Updater/updater_index.json generated an exception.
+Retrieved definition for 0.1.0
+Collected information on 309 local files.
+Found 0 applicable updates.
+Update context completed initialization.
+Repairing process started.
+Repairing process completed. Checked 156 files, repaired 0 files, skipped 156 files.
+Update process started.
+Update process completed. Applied 0 patches with 0 operations.
+===> [Game updating] process COMPLETED! <===
+===> [Game updating] process STARTED! <===
+Update context initializing...
+Software version: 2.6.3
+Software tier: basic
+Update context points to [REDACTED]
+Downloader in use: [MHLab.Patch.Core.Client.IO.FileDownloader]
+Retrieved current version: 0.1.0
+Workspace cleaned. Removed 0 files
+No updater definition found on remote server. The Launcher update will be skipped. Problem reference: The URL http://localhost:8080/Build/Win/Updater/updater_index.json generated an exception.
+Retrieved definition for 0.1.0
+Collected information on 309 local files.
+Found 0 applicable updates.
+Update context completed initialization.
+Repairing process started.
+Repairing process completed. Checked 156 files, repaired 133 files, skipped 23 files.
+Update process started.
+Update process completed. Applied 0 patches with 0 operations.
+===> [Game updating] process COMPLETED! <===
+===> [Launcher updating] process STARTED! <===
+Update context initializing...
+Software version: 2.6.3
+Software tier: basic
+Update context points to [REDACTED]
+Downloader in use: [MHLab.Patch.Core.Client.IO.FileDownloader]
+Retrieved current version: 0.1.0
+Workspace cleaned. Removed 0 files
+No updater definition found on remote server. The Launcher update will be skipped. Problem reference: The URL http://localhost:8080/Build/Win/Updater/updater_index.json generated an exception.
+Retrieved definition for 0.1.0
+Collected information on 442 local files.
+Found 0 applicable updates.
+Update context completed initialization.
+No updater definition found. The Launcher cannot be validated or updated.
+===> [Launcher updating] process COMPLETED! <===

@@ -1,8 +1,7 @@
 {
   "profiles": {
     "MHLab.Patch.Admin": {
-      "commandName": "Project",
-      "commandLineArgs": "build"
+      "commandName": "Project"
     }
   }
 }
