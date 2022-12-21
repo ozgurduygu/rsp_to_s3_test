@@ -28,10 +28,10 @@ jobs:
           targetPlatform: ${{ matrix.targetPlatform }}
           projectPath: DeploymentTest
           buildsPath: ./DeploymentTest_Build_Ubuntu/App
-#       - uses: actions/download-artifact@v3
-#         with:
-#           name: builds-${{ matrix.targetPlatform }}
-#           path: DeploymentTest_Build_Ubuntu/Builds
+      - uses: actions/download-artifact@v3
+        with:
+          name: builds-${{ matrix.targetPlatform }}
+          path: DeploymentTest_Build_Ubuntu/Builds
       - name: Grant patcher permissions.
         working-directory: DeploymentTest_Build_Ubuntu
         run: sudo chmod 777 ./MHLab.Patch.Admin
