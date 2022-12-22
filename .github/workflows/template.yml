@@ -59,10 +59,10 @@ jobs:
           content="${content//$'\n'/'%0A'}"
           content="${content//$'\r'/'%0D'}"
           # end of optional handling for multi line json
-          echo "::set-output name=packageJson::$content"
+          echo "{buildsJson}={$content}" >> $GITHUB_OUTPUT
     
-      - name: echo ServerName
-        run: echo "${{fromJson(steps.getParams.outputs.packageJson).parameters}}.suffix"
+      - name: echo getParams
+        run: echo "${{ fromJson(steps.getParams.outputs.buildsJson).parameters }}"
       
       - uses: actions/upload-artifact@v3
         with:
