@@ -13,14 +13,13 @@ on:
           - minor
           - patch 
     
-
 env:
   PATCHER_PATH: PatcherWorkspace
-  UNITY_BUILD_PATH: ./${{ PATCHER_PATH }}/App
+  UNITY_BUILD_PATH: ./${{ env.PATCHER_PATH }}/App
   UNITY_PROJECT_PATH: DeploymentTest
-  UNITY_LIBRARY-PATH: ${{ UNITY_PROJECT_PATH }}/Library
-  BUILDS_PATH: ${{ PATCHER_PATH }}/Builds
-  PATCHES_PATH: ${{ PATCHER_PATH }}/Patches
+  UNITY_LIBRARY-PATH: ${{ env.UNITY_PROJECT_PATH }}/Library
+  BUILDS_PATH: ${{ env.PATCHER_PATH }}/Builds
+  PATCHES_PATH: ${{ env.PATCHER_PATH }}/Patches
   AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -43,31 +42,31 @@ jobs:
       
       - uses: actions/cache@v3
         with:
-          path: UNITY_LIBRARY-PATH
-          key: UNITY_LIBRARY-PATH-${{ matrix.targetPlatform }}
-          restore-keys: UNITY_LIBRARY-PATH-
+          path: ${{ UNITY_LIBRARY-PATH }}
+          key: ${{ UNITY_LIBRARY-PATH }}-${{ matrix.targetPlatform }}
+          restore-keys: ${{ UNITY_LIBRARY-PATH }}-
       
       - uses: game-ci/unity-builder@v2
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
-          projectPath: UNITY_PROJECT_PATH
-          buildsPath: UNITY_BUILD_PATH
+          projectPath: ${{ UNITY_PROJECT_PATH }}
+          buildsPath: ${{ UNITY_BUILD_PATH }}
       
       - uses: dawidd6/action-download-artifact@v2
         with:
           workflow_conclusion: success
           check_artifacts: true
           name: builds-${{ matrix.targetPlatform }}
-          path: BUILDS_PATH
+          path: ${{ env.BUILDS_PATH }}
       
       - uses: dawidd6/action-download-artifact@v2
         with:
           workflow_conclusion: success
           check_artifacts: true
           name: patches-${{ matrix.targetPlatform }}
-          path: PATCHES_PATH
+          path: ${{ env.PATCHES_PATH }}
       
       - name: Grant patcher permissions.
         working-directory: ${{ env.PATCHER_PATH }}
