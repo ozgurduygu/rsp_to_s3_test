@@ -15,7 +15,7 @@ on:
     
 env:
   PATCHER_PATH: PatcherWorkspace
-  UNITY_BUILD_PATH: ./${{ env.PATCHER_PATH }}/App
+  UNITY_BUILD_PATH: ./$PATCHER_PATH/App
   UNITY_PROJECT_PATH: DeploymentTest
   UNITY_LIBRARY-PATH: ${{ env.UNITY_PROJECT_PATH }}/Library
   BUILDS_PATH: ${{ env.PATCHER_PATH }}/Builds
