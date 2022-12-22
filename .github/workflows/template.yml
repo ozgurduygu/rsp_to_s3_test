@@ -17,19 +17,19 @@ jobs:
         with:
           lfs: true
       
-#       - uses: actions/cache@v3
-#         with:
-#           path: DeploymentTest/Library
-#           key: DeploymentTest/Library-${{ matrix.targetPlatform }}
-#           restore-keys: DeploymentTest/Library-
+      - uses: actions/cache@v3
+        with:
+          path: DeploymentTest/Library
+          key: DeploymentTest/Library-${{ matrix.targetPlatform }}
+          restore-keys: DeploymentTest/Library-
       
-#       - uses: game-ci/unity-builder@v2
-#         env:
-#           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-#         with:
-#           targetPlatform: ${{ matrix.targetPlatform }}
-#           projectPath: DeploymentTest
-#           buildsPath: ./DeploymentTest_Build_Ubuntu/App
+      - uses: game-ci/unity-builder@v2
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          targetPlatform: ${{ matrix.targetPlatform }}
+          projectPath: DeploymentTest
+          buildsPath: ./DeploymentTest_Build_Ubuntu/App
       
       - uses: dawidd6/action-download-artifact@v2
         with:
@@ -42,32 +42,22 @@ jobs:
         working-directory: DeploymentTest_Build_Ubuntu
         run: sudo chmod 777 ./MHLab.Patch.Admin
       
-#       - name: Run patcher build command.
-#         working-directory: DeploymentTest_Build_Ubuntu
-#         run: ./MHLab.Patch.Admin build
-      
-#       - name: Run patcher patch command.
-#         working-directory: DeploymentTest_Build_Ubuntu
-#         run: ./MHLab.Patch.Admin patch
-        
-      - id: getParams
+      - name: Run patcher build command.
         working-directory: DeploymentTest_Build_Ubuntu
-        run: |
-          content=`cat Builds/builds_index.json`
-          # the following lines are only required for multi line json
-          content="${content//'%'/'%25'}"
-          content="${content//$'\n'/'%0A'}"
-          content="${content//$'\r'/'%0D'}"
-          # end of optional handling for multi line json
-          echo "{buildsJson}={$content}" >> $GITHUB_OUTPUT
-    
-      - name: echo getParams
-        run: echo "${{ fromJson(steps.getParams.outputs.buildsJson).parameters }}"
+        run: ./MHLab.Patch.Admin build
       
-#       - uses: actions/upload-artifact@v3
-#         with:
-#           name: builds-${{ matrix.targetPlatform }}
-#           path: DeploymentTest_Build_Ubuntu/Builds
+      - name: Run patcher patch command.
+        working-directory: DeploymentTest_Build_Ubuntu
+        run: ./MHLab.Patch.Admin patch -c 9
+        
+      - name: Run patcher cleanUp command.
+        working-directory: DeploymentTest_Build_Ubuntu
+        run: ./MHLab.Patch.Admin cleanUp
+      
+      - uses: actions/upload-artifact@v3
+        with:
+          name: builds-${{ matrix.targetPlatform }}
+          path: DeploymentTest_Build_Ubuntu/Builds
         
       
 
