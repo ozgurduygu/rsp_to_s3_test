@@ -16,6 +16,15 @@ on:
 
 env:
   PATCHER_PATH: PatcherWorkspace
+  UNITY_BUILD_PATH: ./${{ PatcherWorkspace }}/App
+  UNITY_PROJECT_PATH: DeploymentTest
+  UNITY_LIBRARY-PATH: ${{ UNITY_PROJECT_PATH }}/Library
+  BUILDS_PATH: ${{ PatcherWorkspace }}/Builds
+  PATCHES_PATH: ${{ PatcherWorkspace }}/Patches
+  AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_REGION: ${{ secrets.AWS_BUCKET_REGION }}
 
 jobs:
   unityBuild:
@@ -34,31 +43,31 @@ jobs:
       
       - uses: actions/cache@v3
         with:
-          path: DeploymentTest/Library
-          key: DeploymentTest/Library-${{ matrix.targetPlatform }}
-          restore-keys: DeploymentTest/Library-
+          path: UNITY_LIBRARY-PATH
+          key: UNITY_LIBRARY-PATH-${{ matrix.targetPlatform }}
+          restore-keys: UNITY_LIBRARY-PATH-
       
       - uses: game-ci/unity-builder@v2
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
-          projectPath: DeploymentTest
-          buildsPath: ./${{ env.PATCHER_PATH }}/App
+          projectPath: UNITY_PROJECT_PATH
+          buildsPath: UNITY_BUILD_PATH
       
       - uses: dawidd6/action-download-artifact@v2
         with:
           workflow_conclusion: success
           check_artifacts: true
           name: builds-${{ matrix.targetPlatform }}
-          path: ${{ env.PATCHER_PATH }}/Builds
+          path: BUILDS_PATH
       
       - uses: dawidd6/action-download-artifact@v2
         with:
           workflow_conclusion: success
           check_artifacts: true
           name: patches-${{ matrix.targetPlatform }}
-          path: ${{ env.PATCHER_PATH }}/Patches
+          path: PATCHES_PATH
       
       - name: Grant patcher permissions.
         working-directory: ${{ env.PATCHER_PATH }}
@@ -75,16 +84,20 @@ jobs:
       - name: Run patcher cleanUp command.
         working-directory: ${{ env.PATCHER_PATH }}
         run: ./MHLab.Patch.Admin cleanUp
-      
+        
+      - name: Sync to S3 Builds
+        run: >
+          aws s3 ls ${{ AWS_S3_BUCKET }}
+
       - uses: actions/upload-artifact@v3
         with:
           name: builds-${{ matrix.targetPlatform }}
-          path: ${{ env.PATCHER_PATH }}/Builds
+          path: BUILDS_PATH
 
       - uses: actions/upload-artifact@v3
         with:
           name: patches-${{ matrix.targetPlatform }}
-          path: ${{ env.PATCHER_PATH }}/Patches
+          path: PATCHES_PATH
         
       
 
