@@ -31,19 +31,19 @@ jobs:
           projectPath: DeploymentTest
           buildsPath: ./PatcherWorkspace/App
       
-      # - uses: dawidd6/action-download-artifact@v2
-      #   with:
-      #     workflow_conclusion: success
-      #     check_artifacts: true
-      #     name: builds-${{ matrix.targetPlatform }}
-      #     path: PatcherWorkspace/Builds
+      - uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow_conclusion: success
+          check_artifacts: true
+          name: builds-${{ matrix.targetPlatform }}
+          path: PatcherWorkspace/Builds
       
-      # - uses: dawidd6/action-download-artifact@v2
-      #   with:
-      #     workflow_conclusion: success
-      #     check_artifacts: true
-      #     name: patches-${{ matrix.targetPlatform }}
-      #     path: PatcherWorkspace/Patches
+      - uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow_conclusion: success
+          check_artifacts: true
+          name: patches-${{ matrix.targetPlatform }}
+          path: PatcherWorkspace/Patches
       
       - name: Grant patcher permissions.
         working-directory: PatcherWorkspace
