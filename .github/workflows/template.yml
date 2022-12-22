@@ -1,6 +1,18 @@
 name: Build & Deploy to S3
 
-on: workflow_dispatch
+on: 
+  workflow_dispatch:
+    inputs:
+      releaseType:
+        description: 'Release Type'
+        required: true
+        default: 'patch' 
+        type: choice
+        options:
+          - major
+          - minor
+          - patch 
+    
 
 env:
   PATCHER_PATH: PatcherWorkspace
@@ -54,7 +66,7 @@ jobs:
       
       - name: Run patcher build command.
         working-directory: ${{ env.PATCHER_PATH }}
-        run: ./MHLab.Patch.Admin build
+        run: ./MHLab.Patch.Admin build -r ${{ inputs.releaseType }}
       
       - name: Run patcher patch command.
         working-directory: ${{ env.PATCHER_PATH }}
