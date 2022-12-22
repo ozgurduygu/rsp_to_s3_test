@@ -53,7 +53,7 @@ jobs:
       - id: getParams
         working-directory: DeploymentTest_Build_Ubuntu
         run: |
-          content=`cat ./builds_index.json`
+          content=`cat Builds/builds_index.json`
           # the following lines are only required for multi line json
           content="${content//'%'/'%25'}"
           content="${content//$'\n'/'%0A'}"
