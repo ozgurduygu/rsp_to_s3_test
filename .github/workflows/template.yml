@@ -16,11 +16,13 @@ jobs:
       - uses: actions/checkout@v3
         with:
           lfs: true
+      
       - uses: actions/cache@v3
         with:
           path: DeploymentTest/Library
           key: DeploymentTest/Library-${{ matrix.targetPlatform }}
           restore-keys: DeploymentTest/Library-
+      
       - uses: game-ci/unity-builder@v2
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -28,21 +30,40 @@ jobs:
           targetPlatform: ${{ matrix.targetPlatform }}
           projectPath: DeploymentTest
           buildsPath: ./DeploymentTest_Build_Ubuntu/App
+      
       - uses: dawidd6/action-download-artifact@v2
         with:
           workflow_conclusion: success
           check_artifacts: true
           name: builds-${{ matrix.targetPlatform }}
           path: DeploymentTest_Build_Ubuntu/Builds
+      
       - name: Grant patcher permissions.
         working-directory: DeploymentTest_Build_Ubuntu
         run: sudo chmod 777 ./MHLab.Patch.Admin
+      
       - name: Run patcher build command.
         working-directory: DeploymentTest_Build_Ubuntu
         run: ./MHLab.Patch.Admin build
+      
       - name: Run patcher patch command.
         working-directory: DeploymentTest_Build_Ubuntu
         run: ./MHLab.Patch.Admin patch
+        
+      - id: getParams
+        working-directory: DeploymentTest_Build_Ubuntu
+        run: |
+          content=`cat ./builds_index.json`
+          # the following lines are only required for multi line json
+          content="${content//'%'/'%25'}"
+          content="${content//$'\n'/'%0A'}"
+          content="${content//$'\r'/'%0D'}"
+          # end of optional handling for multi line json
+          echo "::set-output name=packageJson::$content"
+    
+      - name: echo ServerName
+        run: echo "${{fromJson(steps.getParams.outputs.packageJson).parameters}}.suffix"
+      
       - uses: actions/upload-artifact@v3
         with:
           name: builds-${{ matrix.targetPlatform }}
