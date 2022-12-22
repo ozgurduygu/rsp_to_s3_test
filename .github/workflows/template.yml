@@ -36,67 +36,67 @@ jobs:
           - StandaloneWindows64
           - StandaloneOSX
     steps:
-      - uses: actions/checkout@v3
-        with:
-          lfs: true
+#       - uses: actions/checkout@v3
+#         with:
+#           lfs: true
       
-      - uses: actions/cache@v3
-        with:
-          path: ${{ env.UNITY_LIBRARY-PATH }}
-          key: ${{ env.UNITY_LIBRARY-PATH }}-${{ matrix.targetPlatform }}
-          restore-keys: ${{ env.UNITY_LIBRARY-PATH }}-
+#       - uses: actions/cache@v3
+#         with:
+#           path: ${{ env.UNITY_LIBRARY-PATH }}
+#           key: ${{ env.UNITY_LIBRARY-PATH }}-${{ matrix.targetPlatform }}
+#           restore-keys: ${{ env.UNITY_LIBRARY-PATH }}-
       
-      - uses: game-ci/unity-builder@v2
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-        with:
-          targetPlatform: ${{ matrix.targetPlatform }}
-          projectPath: ${{ env.UNITY_PROJECT_PATH }}
-          buildsPath: ${{ env.UNITY_BUILD_PATH }}
+#       - uses: game-ci/unity-builder@v2
+#         env:
+#           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+#         with:
+#           targetPlatform: ${{ matrix.targetPlatform }}
+#           projectPath: ${{ env.UNITY_PROJECT_PATH }}
+#           buildsPath: ${{ env.UNITY_BUILD_PATH }}
       
-      - uses: dawidd6/action-download-artifact@v2
-        with:
-          workflow_conclusion: success
-          check_artifacts: true
-          name: builds-${{ matrix.targetPlatform }}
-          path: ${{ env.BUILDS_PATH }}
+#       - uses: dawidd6/action-download-artifact@v2
+#         with:
+#           workflow_conclusion: success
+#           check_artifacts: true
+#           name: builds-${{ matrix.targetPlatform }}
+#           path: ${{ env.BUILDS_PATH }}
       
-      - uses: dawidd6/action-download-artifact@v2
-        with:
-          workflow_conclusion: success
-          check_artifacts: true
-          name: patches-${{ matrix.targetPlatform }}
-          path: ${{ env.PATCHES_PATH }}
+#       - uses: dawidd6/action-download-artifact@v2
+#         with:
+#           workflow_conclusion: success
+#           check_artifacts: true
+#           name: patches-${{ matrix.targetPlatform }}
+#           path: ${{ env.PATCHES_PATH }}
       
-      - name: Grant patcher permissions.
-        working-directory: ${{ env.PATCHER_PATH }}
-        run: sudo chmod 777 ./MHLab.Patch.Admin
+#       - name: Grant patcher permissions.
+#         working-directory: ${{ env.PATCHER_PATH }}
+#         run: sudo chmod 777 ./MHLab.Patch.Admin
       
-      - name: Run patcher build command.
-        working-directory: ${{ env.PATCHER_PATH }}
-        run: ./MHLab.Patch.Admin build -r ${{ inputs.releaseType }}
+#       - name: Run patcher build command.
+#         working-directory: ${{ env.PATCHER_PATH }}
+#         run: ./MHLab.Patch.Admin build -r ${{ inputs.releaseType }}
       
-      - name: Run patcher patch command.
-        working-directory: ${{ env.PATCHER_PATH }}
-        run: ./MHLab.Patch.Admin patch -c 9
+#       - name: Run patcher patch command.
+#         working-directory: ${{ env.PATCHER_PATH }}
+#         run: ./MHLab.Patch.Admin patch -c 9
         
-      - name: Run patcher cleanUp command.
-        working-directory: ${{ env.PATCHER_PATH }}
-        run: ./MHLab.Patch.Admin cleanUp
+#       - name: Run patcher cleanUp command.
+#         working-directory: ${{ env.PATCHER_PATH }}
+#         run: ./MHLab.Patch.Admin cleanUp
         
       - name: Sync to S3 Builds
         run: >
-          aws s3 ls s3://${{ secrets.AWS_S3_BUCKET }}
+          aws s3 ls s3://${{ env.AWS_S3_BUCKET }}
 
-      - uses: actions/upload-artifact@v3
-        with:
-          name: builds-${{ matrix.targetPlatform }}
-          path: BUILDS_PATH
+#       - uses: actions/upload-artifact@v3
+#         with:
+#           name: builds-${{ matrix.targetPlatform }}
+#           path: BUILDS_PATH
 
-      - uses: actions/upload-artifact@v3
-        with:
-          name: patches-${{ matrix.targetPlatform }}
-          path: PATCHES_PATH
+#       - uses: actions/upload-artifact@v3
+#         with:
+#           name: patches-${{ matrix.targetPlatform }}
+#           path: PATCHES_PATH
         
       
 
