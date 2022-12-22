@@ -87,7 +87,7 @@ jobs:
         
       - name: Sync to S3 Builds
         run: >
-          aws s3 ls s3://${{ env.AWS_S3_BUCKET }}/ --region ${{ env.AWS_REGION }}
+          aws s3 ls s3://$AWS_S3_BUCKET/ --region $AWS_REGION
 
 #       - uses: actions/upload-artifact@v3
 #         with:
