@@ -15,11 +15,11 @@ on:
     
 env:
   PATCHER_PATH: PatcherWorkspace
-  UNITY_BUILD_PATH: ./$PATCHER_PATH/App
+  UNITY_BUILD_PATH: ./PatcherWorkspace/App
   UNITY_PROJECT_PATH: DeploymentTest
-  UNITY_LIBRARY-PATH: $UNITY_PROJECT_PATH/Library
-  BUILDS_PATH: $PATCHER_PATH/Builds
-  PATCHES_PATH: $PATCHER_PATH/Patches
+  UNITY_LIBRARY-PATH: DeploymentTest/Library
+  BUILDS_PATH: PatcherWorkspace/Builds
+  PATCHES_PATH: PatcherWorkspace/Patches
   AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
