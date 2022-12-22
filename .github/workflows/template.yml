@@ -1,6 +1,9 @@
-name: Build project
+name: Build & Deploy to S3
 
 on: workflow_dispatch
+
+env:
+  PATCHER_PATH: PatcherWorkspace
 
 jobs:
   unityBuild:
@@ -29,47 +32,47 @@ jobs:
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
           projectPath: DeploymentTest
-          buildsPath: ./PatcherWorkspace/App
+          buildsPath: ./$PATCHER_PATH/App
       
       - uses: dawidd6/action-download-artifact@v2
         with:
           workflow_conclusion: success
           check_artifacts: true
           name: builds-${{ matrix.targetPlatform }}
-          path: PatcherWorkspace/Builds
+          path: $PATCHER_PATH/Builds
       
       - uses: dawidd6/action-download-artifact@v2
         with:
           workflow_conclusion: success
           check_artifacts: true
           name: patches-${{ matrix.targetPlatform }}
-          path: PatcherWorkspace/Patches
+          path: $PATCHER_PATH/Patches
       
       - name: Grant patcher permissions.
-        working-directory: PatcherWorkspace
+        working-directory: $PATCHER_PATH
         run: sudo chmod 777 ./MHLab.Patch.Admin
       
       - name: Run patcher build command.
-        working-directory: PatcherWorkspace
+        working-directory: $PATCHER_PATH
         run: ./MHLab.Patch.Admin build
       
       - name: Run patcher patch command.
-        working-directory: PatcherWorkspace
+        working-directory: $PATCHER_PATH
         run: ./MHLab.Patch.Admin patch -c 9
         
       - name: Run patcher cleanUp command.
-        working-directory: PatcherWorkspace
+        working-directory: $PATCHER_PATH
         run: ./MHLab.Patch.Admin cleanUp
       
       - uses: actions/upload-artifact@v3
         with:
           name: builds-${{ matrix.targetPlatform }}
-          path: PatcherWorkspace/Builds
+          path: $PATCHER_PATH/Builds
 
       - uses: actions/upload-artifact@v3
         with:
           name: patches-${{ matrix.targetPlatform }}
-          path: PatcherWorkspace/Patches
+          path: $PATCHER_PATH/Patches
         
       
 
