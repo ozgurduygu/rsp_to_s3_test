@@ -28,7 +28,7 @@ jobs:
           targetPlatform: ${{ matrix.targetPlatform }}
           projectPath: DeploymentTest
           buildsPath: ./DeploymentTest_Build_Ubuntu/App
-      - uses: dawidd66/action-download-artifact@v2
+      - uses: dawidd6/action-download-artifact@v2
         with:
           workflow_conclusion: success
           check_artifacts: true
