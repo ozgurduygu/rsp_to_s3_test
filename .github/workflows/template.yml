@@ -46,9 +46,9 @@ jobs:
 #         working-directory: DeploymentTest_Build_Ubuntu
 #         run: ./MHLab.Patch.Admin build
       
-      - name: Run patcher patch command.
-        working-directory: DeploymentTest_Build_Ubuntu
-        run: ./MHLab.Patch.Admin patch
+#       - name: Run patcher patch command.
+#         working-directory: DeploymentTest_Build_Ubuntu
+#         run: ./MHLab.Patch.Admin patch
         
       - id: getParams
         working-directory: DeploymentTest_Build_Ubuntu
@@ -64,10 +64,10 @@ jobs:
       - name: echo getParams
         run: echo "${{ fromJson(steps.getParams.outputs.buildsJson).parameters }}"
       
-      - uses: actions/upload-artifact@v3
-        with:
-          name: builds-${{ matrix.targetPlatform }}
-          path: DeploymentTest_Build_Ubuntu/Builds
+#       - uses: actions/upload-artifact@v3
+#         with:
+#           name: builds-${{ matrix.targetPlatform }}
+#           path: DeploymentTest_Build_Ubuntu/Builds
         
       
 
