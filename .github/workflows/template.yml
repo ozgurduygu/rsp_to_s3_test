@@ -42,17 +42,17 @@ jobs:
       
       - uses: actions/cache@v3
         with:
-          path: ${{ UNITY_LIBRARY-PATH }}
-          key: ${{ UNITY_LIBRARY-PATH }}-${{ matrix.targetPlatform }}
-          restore-keys: ${{ UNITY_LIBRARY-PATH }}-
+          path: ${{ env.UNITY_LIBRARY-PATH }}
+          key: ${{ env.UNITY_LIBRARY-PATH }}-${{ matrix.targetPlatform }}
+          restore-keys: ${{ env.UNITY_LIBRARY-PATH }}-
       
       - uses: game-ci/unity-builder@v2
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
-          projectPath: ${{ UNITY_PROJECT_PATH }}
-          buildsPath: ${{ UNITY_BUILD_PATH }}
+          projectPath: ${{ env.UNITY_PROJECT_PATH }}
+          buildsPath: ${{ env.UNITY_BUILD_PATH }}
       
       - uses: dawidd6/action-download-artifact@v2
         with:
