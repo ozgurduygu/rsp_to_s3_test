@@ -8,7 +8,6 @@ on:
       - closed
     
 env:
-  PR_LABEL: ${{ github.event.pull_request.labels[0].name }}
   PATCHER_PATH: PatcherWorkspace
   UNITY_BUILD_PATH: ./PatcherWorkspace/App
   UNITY_PROJECT_PATH: DeploymentTest
@@ -33,9 +32,9 @@ jobs:
           - StandaloneOSX
     steps:
       - name: Check PR label.
-        if: ${{ !contains(fromJson('["major", "minor", "patch"]'), env.PR_LABEL) }}
+        if: ${{ !contains(fromJson('["major", "minor", "patch"]'), github.event.pull_request.labels[0].name) }}
         run: |
-         echo Invalid label: "${{ env.PR_LABEL }}". Must be either "major", "minor", or "patch"
+         echo Invalid label: "${{ github.event.pull_request.labels[0].name }}". Must be either "major", "minor", or "patch"
          exit 1
 
       - uses: actions/checkout@v3
@@ -70,7 +69,7 @@ jobs:
       
       # - name: Run patcher build command.
       #   working-directory: ${{ env.PATCHER_PATH }}
-      #   run: ./MHLab.Patch.Admin build -r ${{ env.PR_LABEL }}
+      #   run: ./MHLab.Patch.Admin build -r ${{ inputs.releaseType }}
       
       # - name: Run patcher patch command.
       #   working-directory: ${{ env.PATCHER_PATH }}
