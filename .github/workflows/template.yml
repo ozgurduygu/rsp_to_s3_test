@@ -1,9 +1,11 @@
 name: Build & Deploy to S3
 
 on: 
-  push:
+  pull_request:
     branches:
-      - "release"
+      - 'release'
+    types:
+      - closed
     
 env:
   PATCHER_PATH: PatcherWorkspace
@@ -19,6 +21,7 @@ env:
 
 jobs:
   unityBuild:
+    if: github.event.pull_request.merged # Don't run if pr wasn't merged.
     name: Build for ${{ matrix.targetPlatform }}
     runs-on: ubuntu-latest
     strategy:
@@ -29,9 +32,9 @@ jobs:
           - StandaloneOSX
     steps:
       - name: Check push tag.
-        if: ${{ !contains(fromJson('["major", "minor", "patch"]'), github.ref_name) }}
+        if: ${{ !contains(fromJson('["major", "minor", "patch"]'), github.event.label) }}
         run: |
-         echo Invalid tag: ${{ github.ref_name }}
+         echo Invalid label: "${{ github.event.label }}". Must be either "major", "minor", or "patch"
          exit 1
 
       - uses: actions/checkout@v3
