@@ -56,11 +56,11 @@ jobs:
       
       - name: Copy Builds from S3
         run: >
-          aws s3 cp s3://${{ env.AWS_S3_BUCKET }}/Testing/${{ matrix.targetPlatform }}/Builds ${{ env.BUILDS_PATH }}
+          aws s3 cp s3://${{ env.AWS_S3_BUCKET }}/Testing/${{ matrix.targetPlatform }}/Builds/ ${{ env.BUILDS_PATH }} --follow-symlinks
           
       - name: Copy Patches from S3
         run: >
-          aws s3 cp s3://${{ env.AWS_S3_BUCKET }}/Testing/${{ matrix.targetPlatform }}/Patches ${{ env.PATCHES_PATH }}
+          aws s3 cp s3://${{ env.AWS_S3_BUCKET }}/Testing/${{ matrix.targetPlatform }}/Patches/ ${{ env.PATCHES_PATH }} --follow-symlinks
       
       - name: Grant patcher permissions.
         working-directory: ${{ env.PATCHER_PATH }}
@@ -80,11 +80,11 @@ jobs:
         
       - name: Sync Builds to S3
         run: >
-          aws s3 sync ${{ env.BUILDS_PATH }} s3://${{ env.AWS_S3_BUCKET }}/Testing/${{ matrix.targetPlatform }}/Builds --delete
+          aws s3 sync ${{ env.BUILDS_PATH }} s3://${{ env.AWS_S3_BUCKET }}/Testing/${{ matrix.targetPlatform }}/Builds/ --delete
           
       - name: Sync Patches to S3
         run: >
-          aws s3 sync ${{ env.PATCHES_PATH }} s3://${{ env.AWS_S3_BUCKET }}/Testing/${{ matrix.targetPlatform }}/Patches --delete
+          aws s3 sync ${{ env.PATCHES_PATH }} s3://${{ env.AWS_S3_BUCKET }}/Testing/${{ matrix.targetPlatform }}/Patches/ --delete
 
       - uses: actions/upload-artifact@v3
         with:
