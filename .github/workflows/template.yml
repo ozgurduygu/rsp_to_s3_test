@@ -56,11 +56,11 @@ jobs:
       
       - name: Copy Builds from S3
         run: >
-          aws s3 cp s3://${{ env.AWS_S3_BUCKET }}/Testing/${{ matrix.targetPlatform }}/Builds/ ${{ env.BUILDS_PATH }} --follow-symlinks
+          aws s3 cp s3://${{ env.AWS_S3_BUCKET }}/Testing/${{ matrix.targetPlatform }}/Builds/ ${{ env.BUILDS_PATH }} --recursive
           
       - name: Copy Patches from S3
         run: >
-          aws s3 cp s3://${{ env.AWS_S3_BUCKET }}/Testing/${{ matrix.targetPlatform }}/Patches/ ${{ env.PATCHES_PATH }} --follow-symlinks
+          aws s3 cp s3://${{ env.AWS_S3_BUCKET }}/Testing/${{ matrix.targetPlatform }}/Patches/ ${{ env.PATCHES_PATH }} --recursive
       
       - name: Grant patcher permissions.
         working-directory: ${{ env.PATCHER_PATH }}
