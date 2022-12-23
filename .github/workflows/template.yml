@@ -1,4 +1,4 @@
-name: Build & Deploy to S3
+name: Build Unity Project & Deploy to S3
 
 on: 
   pull_request:
@@ -22,7 +22,7 @@ env:
 
 jobs:
   unityBuild:
-    if: github.event.pull_request.merged # Don't run if pr wasn't merged.
+    if: github.event.pull_request.merged # Don't run if PR wasn't merged.
     name: Build for ${{ matrix.targetPlatform }}
     runs-on: ubuntu-latest
     strategy:
@@ -32,7 +32,7 @@ jobs:
           - StandaloneWindows64
           - StandaloneOSX
     steps:
-      - name: Check PR label.
+      - name: Check PR label. # Don't run if PR doesn't have valid labels.
         if: ${{ !contains(fromJson('["major", "minor", "patch"]'), env.PR_LABEL) }}
         run: |
          echo Invalid label: "${{ env.PR_LABEL }}". Must be either "major", "minor", or "patch"
@@ -42,19 +42,19 @@ jobs:
         with:
           lfs: true
       
-      # - uses: actions/cache@v3
-      #   with:
-      #     path: ${{ env.UNITY_LIBRARY-PATH }}
-      #     key: ${{ env.UNITY_LIBRARY-PATH }}-${{ matrix.targetPlatform }}
-      #     restore-keys: ${{ env.UNITY_LIBRARY-PATH }}-
+      - uses: actions/cache@v3 # Cache Library directories to optimize workflow duration.
+        with:
+          path: ${{ env.UNITY_LIBRARY-PATH }}
+          key: ${{ env.UNITY_LIBRARY-PATH }}-${{ matrix.targetPlatform }}
+          restore-keys: ${{ env.UNITY_LIBRARY-PATH }}-
       
-      # - uses: game-ci/unity-builder@v2
-      #   env:
-      #     UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-      #   with:
-      #     targetPlatform: ${{ matrix.targetPlatform }}
-      #     projectPath: ${{ env.UNITY_PROJECT_PATH }}
-      #     buildsPath: ${{ env.UNITY_BUILD_PATH }}
+      - uses: game-ci/unity-builder@v2 # Build the game in $PATCHER_PATH/App directory.
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          targetPlatform: ${{ matrix.targetPlatform }}
+          projectPath: ${{ env.UNITY_PROJECT_PATH }}
+          buildsPath: ${{ env.UNITY_BUILD_PATH }}
       
       - name: Copy Builds from S3
         run: >
@@ -64,35 +64,35 @@ jobs:
         run: >
           aws s3 cp s3://${{ env.AWS_S3_BUCKET }}/Testing/${{ matrix.targetPlatform }}/Patches/ ${{ env.PATCHES_PATH }} --recursive
       
-      - name: Grant patcher permissions.
+      - name: Grant patcher permissions.  # Elevate patcher's permissions for write/read purposes.
         working-directory: ${{ env.PATCHER_PATH }}
         run: sudo chmod 777 ./MHLab.Patch.Admin
       
-      # - name: Run patcher build command.
-      #   working-directory: ${{ env.PATCHER_PATH }}
-      #   run: ./MHLab.Patch.Admin build -r ${{ env.PR_LABEL }}
+      - name: Run patcher build command. # Generate a build with patcher using PR label as a version flag i.e major, minor, or patch.
+        working-directory: ${{ env.PATCHER_PATH }}
+        run: ./MHLab.Patch.Admin build -r ${{ env.PR_LABEL }}
       
-      # - name: Run patcher patch command.
-      #   working-directory: ${{ env.PATCHER_PATH }}
-      #   run: ./MHLab.Patch.Admin patch -c 9
+      - name: Run patcher patch command. # Generate a patch between the two latest builds.
+        working-directory: ${{ env.PATCHER_PATH }}
+        run: ./MHLab.Patch.Admin patch -c 9
         
-      - name: Run patcher cleanUp command.
+      - name: Run patcher cleanUp command. # This is a custom command that deletes redundant builds and patches, and updates the indices.
         id: clean-up
         working-directory: ${{ env.PATCHER_PATH }}
         run: ./MHLab.Patch.Admin cleanUp
         
-      - name: Create version tag.
+      - name: Create version tag. # Create a version tag with the v prefix and target platform e.g. v1.2.0-StandaloneOSX
         uses: rickstaa/action-create-tag@v1
         with:
-          tag: v${{ steps.clean-up.outputs.LATEST_BUILD }}-${{ matrix.targetPlatform }} # Create version tag with the v prefix and target platform e.g. v1.2.0-StandaloneOSX
+          tag: v${{ steps.clean-up.outputs.LATEST_BUILD }}-${{ matrix.targetPlatform }}
 
-      # - name: Sync Builds to S3
-      #   run: >
-      #     aws s3 sync ${{ env.BUILDS_PATH }} s3://${{ env.AWS_S3_BUCKET }}/Testing/${{ matrix.targetPlatform }}/Builds/ --delete
+      - name: Sync Builds to S3
+        run: >
+          aws s3 sync ${{ env.BUILDS_PATH }} s3://${{ env.AWS_S3_BUCKET }}/Testing/${{ matrix.targetPlatform }}/Builds/ --delete
           
-      # - name: Sync Patches to S3
-      #   run: >
-      #     aws s3 sync ${{ env.PATCHES_PATH }} s3://${{ env.AWS_S3_BUCKET }}/Testing/${{ matrix.targetPlatform }}/Patches/ --delete
+      - name: Sync Patches to S3
+        run: >
+          aws s3 sync ${{ env.PATCHES_PATH }} s3://${{ env.AWS_S3_BUCKET }}/Testing/${{ matrix.targetPlatform }}/Patches/ --delete
         
       
 
