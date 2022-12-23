@@ -31,10 +31,10 @@ jobs:
           - StandaloneWindows64
           - StandaloneOSX
     steps:
-      - name: Check push tag.
-        if: ${{ !contains(fromJson('["major", "minor", "patch"]'), github.event.pull_request.labels.*.name) }}
+      - name: Check PR label.
+        if: ${{ !contains(fromJson('["major", "minor", "patch"]'), github.event.pull_request.labels.0.name) }}
         run: |
-         echo Invalid label: "${{ github.event.pull_request.labels.*.name }}". Must be either "major", "minor", or "patch"
+         echo Invalid label: "${{ github.event.pull_request.labels.0.name }}". Must be either "major", "minor", or "patch"
          exit 1
 
       - uses: actions/checkout@v3
