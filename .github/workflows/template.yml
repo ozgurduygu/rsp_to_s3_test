@@ -40,19 +40,19 @@ jobs:
         with:
           lfs: true
       
-      - uses: actions/cache@v3
-        with:
-          path: ${{ env.UNITY_LIBRARY-PATH }}
-          key: ${{ env.UNITY_LIBRARY-PATH }}-${{ matrix.targetPlatform }}
-          restore-keys: ${{ env.UNITY_LIBRARY-PATH }}-
+      # - uses: actions/cache@v3
+      #   with:
+      #     path: ${{ env.UNITY_LIBRARY-PATH }}
+      #     key: ${{ env.UNITY_LIBRARY-PATH }}-${{ matrix.targetPlatform }}
+      #     restore-keys: ${{ env.UNITY_LIBRARY-PATH }}-
       
-      - uses: game-ci/unity-builder@v2
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-        with:
-          targetPlatform: ${{ matrix.targetPlatform }}
-          projectPath: ${{ env.UNITY_PROJECT_PATH }}
-          buildsPath: ${{ env.UNITY_BUILD_PATH }}
+      # - uses: game-ci/unity-builder@v2
+      #   env:
+      #     UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+      #   with:
+      #     targetPlatform: ${{ matrix.targetPlatform }}
+      #     projectPath: ${{ env.UNITY_PROJECT_PATH }}
+      #     buildsPath: ${{ env.UNITY_BUILD_PATH }}
       
       - name: Copy Builds from S3
         run: >
@@ -66,13 +66,13 @@ jobs:
         working-directory: ${{ env.PATCHER_PATH }}
         run: sudo chmod 777 ./MHLab.Patch.Admin
       
-      - name: Run patcher build command.
-        working-directory: ${{ env.PATCHER_PATH }}
-        run: ./MHLab.Patch.Admin build -r ${{ inputs.releaseType }}
+      # - name: Run patcher build command.
+      #   working-directory: ${{ env.PATCHER_PATH }}
+      #   run: ./MHLab.Patch.Admin build -r ${{ inputs.releaseType }}
       
-      - name: Run patcher patch command.
-        working-directory: ${{ env.PATCHER_PATH }}
-        run: ./MHLab.Patch.Admin patch -c 9
+      # - name: Run patcher patch command.
+      #   working-directory: ${{ env.PATCHER_PATH }}
+      #   run: ./MHLab.Patch.Admin patch -c 9
         
       - name: Run patcher cleanUp command.
         id: clean-up
@@ -82,23 +82,13 @@ jobs:
       - name: Get Latest Build Version
         run: echo Latest build was ${{ steps.clean-up.outputs.latestVersion }}
         
-      - name: Sync Builds to S3
-        run: >
-          aws s3 sync ${{ env.BUILDS_PATH }} s3://${{ env.AWS_S3_BUCKET }}/Testing/${{ matrix.targetPlatform }}/Builds/ --delete
+      # - name: Sync Builds to S3
+      #   run: >
+      #     aws s3 sync ${{ env.BUILDS_PATH }} s3://${{ env.AWS_S3_BUCKET }}/Testing/${{ matrix.targetPlatform }}/Builds/ --delete
           
-      - name: Sync Patches to S3
-        run: >
-          aws s3 sync ${{ env.PATCHES_PATH }} s3://${{ env.AWS_S3_BUCKET }}/Testing/${{ matrix.targetPlatform }}/Patches/ --delete
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: builds-${{ matrix.targetPlatform }}
-          path: BUILDS_PATH
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: patches-${{ matrix.targetPlatform }}
-          path: PATCHES_PATH
+      # - name: Sync Patches to S3
+      #   run: >
+      #     aws s3 sync ${{ env.PATCHES_PATH }} s3://${{ env.AWS_S3_BUCKET }}/Testing/${{ matrix.targetPlatform }}/Patches/ --delete
         
       
 
