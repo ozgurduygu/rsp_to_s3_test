@@ -80,7 +80,7 @@ jobs:
         run: ./MHLab.Patch.Admin cleanUp
         
       - name: Get Latest Build Version
-        run: echo Latest build was ${{ steps.clean-up.outputs.latestVersion }}
+        run: echo Latest build was ${{ steps.clean-up.outputs.LATEST_BUILD }}
         
       # - name: Sync Builds to S3
       #   run: >
