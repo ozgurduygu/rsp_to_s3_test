@@ -70,9 +70,9 @@ jobs:
         working-directory: ${{ env.PATCHER_PATH }}
         run: ./MHLab.Patch.Admin build -r ${{ inputs.releaseType }}
       
-#       - name: Run patcher patch command.
-#         working-directory: ${{ env.PATCHER_PATH }}
-#         run: ./MHLab.Patch.Admin patch -c 9
+      - name: Run patcher patch command.
+        working-directory: ${{ env.PATCHER_PATH }}
+        run: ./MHLab.Patch.Admin patch -c 9
         
       - name: Run patcher cleanUp command.
         working-directory: ${{ env.PATCHER_PATH }}
