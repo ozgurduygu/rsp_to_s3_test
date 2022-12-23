@@ -4,10 +4,6 @@ on:
   push:
     branches:
       - "release"
-    tags:
-      - "major"
-      - "minor"
-      - "patch" 
     
 env:
   PATCHER_PATH: PatcherWorkspace
@@ -32,12 +28,14 @@ jobs:
           - StandaloneWindows64
           - StandaloneOSX
     steps:
+      - name: Check push tag.
+        if: ${{ !contains(fromJson('["major", "minor", "patch"]'), github.ref_name) }}
+        run: exit 1
+
       - uses: actions/checkout@v3
         with:
           lfs: true
       
-      - name: Echo push tag.
-        run: echo Tag => ${{ github.ref_name }}
       # - uses: actions/cache@v3
       #   with:
       #     path: ${{ env.UNITY_LIBRARY-PATH }}
