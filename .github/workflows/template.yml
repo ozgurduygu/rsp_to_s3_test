@@ -20,6 +20,10 @@ env:
   UNITY_LIBRARY-PATH: DeploymentTest/Library
   BUILDS_PATH: PatcherWorkspace/Builds
   PATCHES_PATH: PatcherWorkspace/Patches
+  AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_REGION: ${{ secrets.AWS_REGION }}
 
 jobs:
   unityBuild:
@@ -50,19 +54,13 @@ jobs:
 #           projectPath: ${{ env.UNITY_PROJECT_PATH }}
 #           buildsPath: ${{ env.UNITY_BUILD_PATH }}
       
-#       - uses: dawidd6/action-download-artifact@v2
-#         with:
-#           workflow_conclusion: success
-#           check_artifacts: true
-#           name: builds-${{ matrix.targetPlatform }}
-#           path: ${{ env.BUILDS_PATH }}
-      
-#       - uses: dawidd6/action-download-artifact@v2
-#         with:
-#           workflow_conclusion: success
-#           check_artifacts: true
-#           name: patches-${{ matrix.targetPlatform }}
-#           path: ${{ env.PATCHES_PATH }}
+      - name: Copy Builds from S3
+        run: >
+          aws s3 cp s3://${{ env.AWS_S3_BUCKET }}/Testing/${{ matrix.targetPlatform }}/Builds/ ${{ env.BUILDS_PATH }}
+          
+      - name: Copy Patches from S3
+        run: >
+          aws s3 cp s3://${{ env.AWS_S3_BUCKET }}/Testing/${{ matrix.targetPlatform }}/Patches/ ${{ env.PATCHES_PATH }}
       
 #       - name: Grant patcher permissions.
 #         working-directory: ${{ env.PATCHER_PATH }}
@@ -80,14 +78,13 @@ jobs:
 #         working-directory: ${{ env.PATCHER_PATH }}
 #         run: ./MHLab.Patch.Admin cleanUp
         
-      - name: Sync to S3 Builds
+      - name: Sync Builds to S3
         run: >
-          aws s3 cp s3://${{ env.AWS_S3_BUCKET }}/Testing/${{ matrix.targetPlatform }}/Builds/ ${{ env.BUILDS_PATH }} --dryrun 
-        env:
-          AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
+          aws s3 sync  ${{ env.BUILDS_PATH }} s3://${{ env.AWS_S3_BUCKET }}/Testing/${{ matrix.targetPlatform }}/Builds/ --delete
+          
+      - name: Sync Patches to S3
+        run: >
+          aws s3 sync  ${{ env.PATCHES_PATH }} s3://${{ env.AWS_S3_BUCKET }}/Testing/${{ matrix.targetPlatform }}/Patches/ --delete
 
 #       - uses: actions/upload-artifact@v3
 #         with:
