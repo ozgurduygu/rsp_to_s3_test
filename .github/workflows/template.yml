@@ -82,7 +82,7 @@ jobs:
       - name: Create version tag.
         uses: rickstaa/action-create-tag@v1
         with:
-          tag: v${{ steps.clean-up.outputs.LATEST_BUILD }} # Create tag with the v prefix e.g. v1.2.0
+          tag: v${{ steps.clean-up.outputs.LATEST_BUILD }}-${{ matrix.targetPlatform }} # Create version tag with the v prefix and target platform e.g. v1.2.0-StandaloneOSX
 
       # - name: Sync Builds to S3
       #   run: >
