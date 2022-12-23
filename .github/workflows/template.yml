@@ -75,8 +75,12 @@ jobs:
         run: ./MHLab.Patch.Admin patch -c 9
         
       - name: Run patcher cleanUp command.
+        id: clean-up
         working-directory: ${{ env.PATCHER_PATH }}
         run: ./MHLab.Patch.Admin cleanUp
+        
+      - name: Get Latest Build Version
+        run: echo Latest build was ${{ steps.clean-up.outputs.latestVersion }}
         
       - name: Sync Builds to S3
         run: >
