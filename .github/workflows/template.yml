@@ -1,17 +1,13 @@
 name: Build & Deploy to S3
 
 on: 
-  workflow_dispatch:
-    inputs:
-      releaseType:
-        description: 'Release Type'
-        required: true
-        default: 'patch' 
-        type: choice
-        options:
-          - major
-          - minor
-          - patch 
+  push:
+    branches:
+      - "release"
+    tags:
+      - "major"
+      - "minor"
+      - "patch" 
     
 env:
   PATCHER_PATH: PatcherWorkspace
@@ -40,6 +36,8 @@ jobs:
         with:
           lfs: true
       
+      - name: Echo push tag.
+        run: echo Tag => ${{ github.ref_name }}
       # - uses: actions/cache@v3
       #   with:
       #     path: ${{ env.UNITY_LIBRARY-PATH }}
