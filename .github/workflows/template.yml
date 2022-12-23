@@ -30,7 +30,9 @@ jobs:
     steps:
       - name: Check push tag.
         if: ${{ !contains(fromJson('["major", "minor", "patch"]'), github.ref_name) }}
-        run: exit 1
+        run: |
+         echo Invalid tag: ${{ github.ref_name }}
+         exit 1
 
       - uses: actions/checkout@v3
         with:
