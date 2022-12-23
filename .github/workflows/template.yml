@@ -82,7 +82,7 @@ jobs:
         
       - name: Sync to S3 Builds
         run: >
-          aws s3 cp s3://${{ env.AWS_S3_BUCKET }}/Testing/${{ matrix.targetPlatform }}/Builds ${{ env.BUILDS_PATH }} --dryrun 
+          aws s3 cp s3://${{ env.AWS_S3_BUCKET }}/Testing/${{ matrix.targetPlatform }}/Builds/ ${{ env.BUILDS_PATH }} --dryrun 
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_KEY_ID }}
