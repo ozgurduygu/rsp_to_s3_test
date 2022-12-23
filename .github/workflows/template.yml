@@ -79,9 +79,11 @@ jobs:
         working-directory: ${{ env.PATCHER_PATH }}
         run: ./MHLab.Patch.Admin cleanUp
         
-      - name: Get Latest Build Version
-        run: echo Latest build was ${{ steps.clean-up.outputs.LATEST_BUILD }}
-        
+      - name: Create version tag.
+        uses: rickstaa/action-create-tag@v1
+        with:
+          tag: v${{ steps.clean-up.outputs.LATEST_BUILD }} # Create tag with the v prefix e.g. v1.2.0
+
       # - name: Sync Builds to S3
       #   run: >
       #     aws s3 sync ${{ env.BUILDS_PATH }} s3://${{ env.AWS_S3_BUCKET }}/Testing/${{ matrix.targetPlatform }}/Builds/ --delete
